@@ -1,0 +1,178 @@
+import java.util.*;
+
+public class Main{
+
+    static class binaryTree{
+
+        static class Node{
+            int data;
+            Node left;
+            Node right;
+
+            public Node(int data){
+                this.data = data;
+            }
+        }
+
+        static Node root = null;
+
+        public Node buildTree() {
+            java.util.Scanner sc = new java.util.Scanner(System.in);
+            System.out.println("type data");
+            int n = sc.nextInt();
+            Node newNode = new Node(n);
+            if(newNode.data == -1){
+                return null;
+            }
+            if(root == null){
+                root = newNode;
+            }
+            System.out.println("type left data for " + newNode.data);
+            newNode.left = buildTree();
+            System.out.println("type right data for " + newNode.data);
+            newNode.right = buildTree();
+
+            return newNode;
+        }
+
+        public void inOrder(Node newNode){
+            if(newNode == null){
+                return;
+            }else{
+                inOrder(newNode.left);
+                System.out.print(newNode.data + " ");
+                inOrder(newNode.right);
+            }
+        }
+
+        public void preOrder(Node newNode){
+            if(newNode == null){
+                return;
+            }else{
+                System.out.print(newNode.data + " ");
+                preOrder(newNode.left);
+                preOrder(newNode.right);
+            }
+        }
+
+        public void postOrder(Node newNode){
+            if(newNode == null){
+                return;
+            }else{
+                postOrder(newNode.left);
+                postOrder(newNode.right);
+                System.out.print(newNode.data + " ");
+            }
+        }
+
+        public int height(Node newNode){
+            if(newNode == null){
+                return 0;
+            }else{
+                return Math.max(height(newNode.left),height(newNode.right)) + 1;
+            }
+        }
+
+        public void nodeAtDistance(Node newNode,int k){
+            if(newNode == null){
+                return;
+            }if( k==0){
+                System.out.print(newNode.data + " ");
+            }else{
+                nodeAtDistance(newNode.left,k-1);
+                nodeAtDistance(newNode.right,k-1);
+            }
+        }
+
+        public void levelOrder(Node newNode,int k){
+            if(k == 0){
+                System.out.print(root.data + " ");
+            }
+            if(newNode == null){
+                return;
+            }
+            else{
+                if(newNode.left != null){
+                    System.out.print(newNode.left.data + " ");
+                }
+                if (newNode.right != null){
+                    System.out.print(newNode.right.data + " ");
+                }
+                levelOrder(newNode.left,k+1);
+                levelOrder(newNode.right,k+1);
+            }
+        }
+
+        static int i = 0;
+
+        private void sizeCount(Node newNode, int k){
+            if(k == 0){
+                i = i + 1;
+            }
+            if(newNode == null){
+                return;
+            }
+            else{
+                if(newNode.left != null){
+                    i = i + 1;
+                }
+                if (newNode.right != null){
+                    i = i + 1;
+                }
+                sizeCount(newNode.left,k+1);
+                sizeCount(newNode.right,k+1);
+            }
+        }
+
+        public void size(binaryTree b){
+            sizeCount(b.root,0);
+            System.out.println(i);
+        }
+
+        static int max = 0;
+
+        private void maxCounter(Node newNode,int k){
+            if(newNode == null){
+                return;
+            }
+            if(newNode.data > max){
+                max = newNode.data;
+            }
+            if(newNode.left != null){
+                maxCounter(newNode.left, k+1);
+            }
+            if(newNode.right != null){
+                maxCounter(newNode.right,k+1);
+            }
+        }
+
+        public void max(binaryTree b){
+            maxCounter(b.root,0);
+            System.out.println(max);
+        }
+
+        public void iterativeInOrder(){
+            Stack<Node> st = new Stack<Node>();
+        }
+
+    }
+
+    public static void main(String[] args) {
+        binaryTree b = new binaryTree();
+        b.buildTree();
+//        b.inOrder(binaryTree.root);
+//        System.out.print("\n");
+//        b.preOrder(binaryTree.root);
+//        System.out.print("\n");
+//        b.postOrder(binaryTree.root);
+//        System.out.println("the size is");
+//        System.out.println(b.height(binaryTree.root));
+//        b.nodeAtDistance(binaryTree.root,1);
+//        b.levelOrder(binaryTree.root,0);
+//        b.size(b);
+//        b.max(b);
+
+
+    }
+
+}
